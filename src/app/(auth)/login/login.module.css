@@ -1,0 +1,568 @@
+/* ====================================================
+   Material Dashboard — Premium Login Page
+   Split-panel design with animated gradient hero
+   Light & Dark mode support via CSS variables
+   ==================================================== */
+
+/* Full-page wrapper — split into two panels */
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-color);
+  transition: background 0.3s ease;
+}
+
+/* ── Left Hero Panel ────────────────────────────────── */
+.heroPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(195deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 16s ease infinite;
+  contain: paint;
+}
+
+/* Floating decorative orbs — Hardware Accelerated */
+.heroPanel::before,
+.heroPanel::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.35;
+  animation: float 10s ease-in-out infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  pointer-events: none;
+}
+
+.heroPanel::before {
+  width: 320px;
+  height: 320px;
+  background: #fca5a5;
+  top: -80px;
+  left: -60px;
+}
+
+.heroPanel::after {
+  width: 260px;
+  height: 260px;
+  background: #f87171;
+  bottom: -60px;
+  right: -40px;
+  animation-delay: -5s;
+  animation-direction: reverse;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 420px;
+}
+
+.heroIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.75rem;
+  font-size: 2.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.heroTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.heroFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  text-align: left;
+}
+
+.heroFeatureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.heroFeatureDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* ── Right Form Panel ───────────────────────────────── */
+.formPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--surface-alt);
+  transition: background 0.3s ease;
+  position: relative;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border-radius: 1rem;
+  box-shadow:
+    0 20px 60px -12px rgba(0, 0, 0, 0.12),
+    0 0 0 1px var(--border);
+  padding: 2.75rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Title area */
+.titleArea {
+  text-align: center;
+}
+
+.titleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(195deg, #ef4444, #dc2626);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.title {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+/* Error alert */
+.errorAlert {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(135deg, var(--error-bg-from), var(--error-bg-to));
+  color: var(--error-text);
+  border-radius: 0.625rem;
+  font-size: 0.825rem;
+  font-weight: 500;
+  border: 1px solid var(--error-border);
+  animation: shakeX 0.5s ease-in-out;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.errorIcon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Form layout */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.inputGroup label {
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.3s ease;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 0.85rem;
+  font-size: 1.05rem;
+  color: var(--input-icon);
+  pointer-events: none;
+  transition: color var(--transition-fast);
+  z-index: 1;
+}
+
+.inputWrapper input {
+  width: 100%;
+  padding: 0.8rem 0.875rem 0.8rem 2.65rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.inputWrapper input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.inputWrapper input:focus {
+  outline: none;
+  border-color: #dc2626;
+  background-color: var(--surface);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.inputWrapper:focus-within .inputIcon {
+  color: #dc2626;
+}
+
+/* Password toggle */
+.togglePassword {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--input-icon);
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+  z-index: 1;
+}
+
+.togglePassword:hover {
+  color: var(--text-secondary);
+}
+
+/* Submit Button */
+.submitBtn {
+  margin-top: 0.25rem;
+  background: linear-gradient(195deg, #ef4444, #dc2626);
+  color: #fff;
+  border: none;
+  border-radius: 0.625rem;
+  padding: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+  box-shadow:
+    0 4px 20px 0 rgba(0, 0, 0, .14),
+    0 7px 10px -5px rgba(220, 38, 38, .4);
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px -5px rgba(220, 38, 38, .5);
+}
+
+.submitBtn:hover::after {
+  transform: translateX(100%);
+}
+
+.submitBtn:active {
+  transform: translateY(0);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--divider-line);
+  transition: background 0.3s ease;
+}
+
+.dividerText {
+  font-size: 0.73rem;
+  color: var(--divider-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+/* Demo credentials box */
+.demoInfo {
+  background: linear-gradient(135deg, var(--demo-bg-from), var(--demo-bg-to));
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--demo-border);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.demoHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.demoHeader span:first-child {
+  font-size: 0.85rem;
+}
+
+.demoHeader span:last-child {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--demo-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+
+.demoAccounts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.demoAccounts small {
+  font-size: 0.72rem;
+  color: var(--demo-text);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.01em;
+  transition: color 0.3s ease;
+}
+
+.demoPassword {
+  margin-top: 0.35rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed var(--demo-divider);
+  font-size: 0.72rem;
+  color: var(--demo-accent);
+  font-weight: 600;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Back link */
+.backLink {
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
+.backLink a {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.backLink a:hover {
+  color: #dc2626;
+}
+
+/* ── Animations ─────────────────────────────────────── */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(15px, -20px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-10px, 10px) scale(0.95);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shakeX {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-6px);
+  }
+
+  40% {
+    transform: translateX(6px);
+  }
+
+  60% {
+    transform: translateX(-4px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .heroPanel {
+    min-height: 280px;
+    padding: 2.5rem 2rem;
+  }
+
+  .heroTitle {
+    font-size: 1.5rem;
+  }
+
+  .heroFeatures {
+    display: none;
+  }
+
+  .formPanel {
+    padding: 1.5rem;
+  }
+
+  .formContainer {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroPanel {
+    min-height: 200px;
+    padding: 2rem 1.25rem;
+  }
+
+  .heroSubtitle {
+    display: none;
+  }
+
+  .formContainer {
+    padding: 2rem 1.5rem;
+  }
+}

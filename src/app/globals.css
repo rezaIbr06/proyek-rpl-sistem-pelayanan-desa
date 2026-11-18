@@ -1,0 +1,373 @@
+/* ====================================================
+   Argon Dashboard Laravel BS4 Design System
+   Red Crimson Edition — High Contrast & Ultra Sharp
+   Supports 2 Modes: Terang (Light) and Gelap (Dark)
+   ==================================================== */
+
+:root, [data-theme="light"] {
+  --theme: light;
+  
+  /* Argon Background and Text — High-contrast & crisp, zero blur */
+  --bg-color: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  /* Red Brand Palette (Deep Crimson & Ruby Red) */
+  --primary: #dc2626;
+  --primary-hover: #b91c1c;
+  --primary-light: #fef2f2;
+  --secondary: #f1f5f9;
+  --info:    #ef4444;
+  --success: #16a34a;
+  --warning: #ea580c;
+  --danger:  #dc2626;
+  --dark:    #0f172a;
+
+  /* Argon Header Gradient (Vibrant Crimson-to-Ruby Red) */
+  --header-bg: linear-gradient(87deg, #dc2626 0, #991b1b 100%);
+  --header-text: #ffffff;
+  --header-text-muted: rgba(255, 255, 255, 0.95);
+
+  /* Surfaces & Borders */
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --border:  #cbd5e1;
+  --border-subtle: #e2e8f0;
+
+  /* Elevation Shadows */
+  --shadow-sm:  0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md:  0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+  --shadow-lg:  0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+  --shadow-card: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+  --shadow-primary: 0 4px 14px 0 rgba(220, 38, 38, 0.35);
+
+  --glass-bg:     #ffffff;
+  --glass-border: #cbd5e1;
+
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.25s ease;
+
+  /* Sidebar styling (Crisp White Sidebar, Sharp Typography) */
+  --sidebar-bg-from: #ffffff;
+  --sidebar-bg-to:   #ffffff;
+  --sidebar-border:  #e2e8f0;
+  --sidebar-text-title: #0f172a;
+  --sidebar-text:    #1e293b;
+  --sidebar-text-hover: #dc2626;
+  --sidebar-hover-bg: #fef2f2;
+  --sidebar-badge-bg: rgba(220, 38, 38, 0.12);
+  --sidebar-badge-text: #dc2626;
+  --sidebar-logout-border: #cbd5e1;
+  --sidebar-shadow: 0 0 2rem 0 rgba(15, 23, 42, 0.06);
+
+  /* Input fields */
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-text: #0f172a;
+  --input-placeholder: #64748b;
+  --input-icon: #475569;
+
+  /* Demo info */
+  --demo-bg-from: #fef2f2;
+  --demo-bg-to: #fee2e2;
+  --demo-border: #fca5a5;
+  --demo-accent: #dc2626;
+  --demo-divider: #fca5a5;
+  --demo-text: #1e293b;
+
+  /* Error */
+  --error-bg-from: #fef2f2;
+  --error-bg-to: #fee2e2;
+  --error-border: #fca5a5;
+  --error-text: #dc2626;
+
+  /* Divider */
+  --divider-line: #cbd5e1;
+  --divider-text: #475569;
+}
+
+/* ── Dark Theme (Mode Gelap) ────────────────────────── */
+[data-theme="dark"] {
+  --theme: dark;
+
+  /* Background and Text — High contrast & deep dark without any blurriness */
+  --bg-color:       #0b0f19;
+  --text-primary:   #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted:     #94a3b8;
+
+  --primary:        #ef4444;
+  --primary-hover:  #f87171;
+  --primary-light:  #450a0a;
+  --secondary:      #1e293b;
+  --info:           #f43f5e;
+  --success:        #22c55e;
+  --warning:        #f97316;
+  --danger:         #ef4444;
+  --dark:           #020617;
+
+  /* Argon Header Gradient for Dark Mode (Deep Garnet to Ruby Dark) */
+  --header-bg: linear-gradient(87deg, #7f1d1d 0, #450a0a 100%);
+  --header-text: #ffffff;
+  --header-text-muted: rgba(255, 255, 255, 0.95);
+
+  /* Surfaces & Borders */
+  --surface:        #111827;
+  --surface-alt:    #0f172a;
+  --border:         rgba(255, 255, 255, 0.16);
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+
+  --glass-bg:       #111827;
+  --glass-border:   rgba(255, 255, 255, 0.16);
+
+  --shadow-sm:      0 2px 6px -1px rgba(0,0,0,.5);
+  --shadow-md:      0 4px 10px -2px rgba(0,0,0,.6);
+  --shadow-lg:      0 8px 26px -4px rgba(0,0,0,.7);
+  --shadow-card:    0 4px 20px 0 rgba(0,0,0,0.4);
+  --shadow-primary: 0 4px 14px 0 rgba(239, 68, 68, 0.4);
+
+  /* Sidebar styling for Dark Mode */
+  --sidebar-bg-from: #111827;
+  --sidebar-bg-to:   #0f172a;
+  --sidebar-border:  rgba(255, 255, 255, 0.16);
+  --sidebar-text-title: #ffffff;
+  --sidebar-text:    #e2e8f0;
+  --sidebar-text-hover: #ffffff;
+  --sidebar-hover-bg: rgba(239, 68, 68, 0.15);
+  --sidebar-badge-bg: rgba(239, 68, 68, 0.25);
+  --sidebar-badge-text: #fca5a5;
+  --sidebar-logout-border: rgba(255, 255, 255, 0.25);
+  --sidebar-shadow: 0 0 2rem 0 rgba(0,0,0,0.5);
+
+  /* Input fields */
+  --input-bg: #0f172a;
+  --input-border: rgba(255, 255, 255, 0.25);
+  --input-text: #ffffff;
+  --input-placeholder: #94a3b8;
+  --input-icon: #cbd5e1;
+
+  /* Demo info */
+  --demo-bg-from: #1f1315;
+  --demo-bg-to: #2c1214;
+  --demo-border: #7f1d1d;
+  --demo-accent: #f87171;
+  --demo-divider: #7f1d1d;
+  --demo-text: #f8fafc;
+
+  /* Error */
+  --error-bg-from: #3b1f1f;
+  --error-bg-to: #2d1515;
+  --error-border: #991b1b;
+  --error-text: #fca5a5;
+
+  /* Divider */
+  --divider-line: rgba(255, 255, 255, 0.16);
+  --divider-text: #cbd5e1;
+}
+
+/* ---- Reset & Defaults ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+  font-family: var(--font-opensans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Crisp Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Global Form Elements */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input, select, textarea {
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.75rem;
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.25);
+}
+
+select option {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+/* ---- Links ---- */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--primary-hover); }
+
+/* ---- Argon Card / Panels ---- */
+.glass-panel, .argon-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  border-radius: 0.375rem;
+  transition: all 0.25s ease;
+}
+
+/* Argon Stat Card */
+.stat-card {
+  background: var(--surface);
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15), 0 1px 3px rgba(15, 23, 42, 0.1);
+  flex-shrink: 0;
+}
+
+.icon-shape-primary { background: linear-gradient(87deg, #dc2626 0, #991b1b 100%); }
+.icon-shape-warning { background: linear-gradient(87deg, #ea580c 0, #c2410c 100%); }
+.icon-shape-success { background: linear-gradient(87deg, #16a34a 0, #15803d 100%); }
+.icon-shape-danger  { background: linear-gradient(87deg, #dc2626 0, #b91c1c 100%); }
+.icon-shape-info    { background: linear-gradient(87deg, #e11d48 0, #be123c 100%); }
+
+/* ---- Argon Table Clean Styling ---- */
+.argon-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.argon-table th {
+  background-color: var(--surface-alt);
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.argon-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.argon-table tr:hover td {
+  background-color: var(--surface-alt);
+}
+
+/* ---- Utilities & Header Action Buttons ---- */
+.header-action-btn {
+  background-color: #ffffff !important;
+  color: #dc2626 !important;
+  padding: 0.65rem 1.35rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  white-space: nowrap !important;
+}
+
+.header-action-btn span,
+.header-action-btn strong,
+.header-action-btn * {
+  color: #dc2626 !important;
+}
+
+.header-action-btn:hover {
+  background-color: #f8fafc !important;
+  color: #b91c1c !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Table late warning row adaptive for light & dark mode */
+.late-row {
+  background-color: rgba(239, 68, 68, 0.08) !important;
+}
+.late-row:hover {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

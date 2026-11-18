@@ -1,0 +1,335 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String              @id @default(uuid())
+  name               String
+  email              String              @unique
+  passwordHash       String
+  role               String              @default("CITIZEN") // CITIZEN, WARGA, STAF, SUPERVISOR, ADMIN
+  status             String              @default("ACTIVE") // ACTIVE, INACTIVE, SUSPENDED
+  emailVerified      DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  citizenProfile          CitizenProfile?
+  userProfile             UserProfile?
+  sessions                UserSession[]
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+  consents                UserConsent[]
+  notifications           Notification[]
+  auditLogs               AuditLog[]
+}
+
+model UserSession {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionTokenHash String   @unique
+  expiresAt        DateTime
+  createdAt        DateTime @default(now())
+
+  @@index([userId])
+  @@map("user_sessions")
+}
+
+model EmailVerificationToken {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@map("email_verification_tokens")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@map("password_reset_tokens")
+}
+
+model UserProfile {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  birthPlace        String?
+  birthDate         DateTime?
+  gender            String?
+  areaId            String?
+  additionalAddress String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("user_profiles")
+}
+
+model UserConsent {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  consentType    String   // TERMS_OF_SERVICE, PRIVACY_POLICY, DATA_PROCESSING
+  consentVersion String   @default("v1.0")
+  acceptedAt     DateTime @default(now())
+
+  @@index([userId])
+  @@map("user_consents")
+}
+
+model CitizenProfile {
+  id             String              @id @default(uuid())
+  userId         String              @unique
+  user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nik            String?             @unique
+  nomorKk        String?
+  alamat         String
+  nomorTelepon   String
+  tempatLahir    String?
+  tanggalLahir   DateTime?
+  jenisKelamin   String?             // L, P
+  pekerjaan      String?
+  agama          String?
+
+  applications   ServiceApplication[]
+}
+
+model Service {
+  id             String               @id @default(uuid())
+  name           String               @unique
+  description    String
+  requirements   String               // JSON string or rich text outlining requirements
+  isActive       Boolean              @default(true)
+  estimatedDays  Int                  @default(3) // Estimated processing time in days
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  applications   ServiceApplication[]
+}
+
+model ServiceApplication {
+  id               String                @id @default(uuid())
+  applicationNum   String                @unique // e.g. REQ-20260902-0001
+  citizenId        String
+  citizen          CitizenProfile        @relation(fields: [citizenId], references: [id], onDelete: Cascade)
+  serviceId        String
+  service          Service               @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  status           String                @default("SUBMITTED") // SUBMITTED, VERIFIED, REVISION_REQUIRED, PROCESSING, COMPLETED, REJECTED
+  
+  submittedAt      DateTime              @default(now())
+  processedAt      DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  documents        ApplicationDocument[]
+  histories        ApplicationHistory[]
+}
+
+model ApplicationDocument {
+  id             String             @id @default(uuid())
+  applicationId  String
+  application    ServiceApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  name           String             // e.g. "KTP", "Surat Pengantar RT"
+  fileUrl        String             // S3 URL or path reference, not a blob
+  uploadedAt     DateTime           @default(now())
+}
+
+model ApplicationHistory {
+  id             String             @id @default(uuid())
+  applicationId  String
+  application    ServiceApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  statusFrom     String?
+  statusTo       String
+  notes          String?
+  changedBy      String?            // User ID who made the change (or "SYSTEM")
+  createdAt      DateTime           @default(now())
+}
+
+model Notification {
+  id             String                 @id @default(uuid())
+  userId         String
+  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId  String?
+  title          String
+  message        String
+  isRead         Boolean                @default(false)
+  createdAt      DateTime               @default(now())
+  deliveries     NotificationDelivery[]
+  whatsappLogs   WhatsAppMessageLog[]
+}
+
+model NotificationDelivery {
+  id                String       @id @default(uuid())
+  notificationId    String
+  notification      Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  eventType         String       // SUBMITTED, PROCESSING, REVISION_REQUIRED, APPROVED, REJECTED, COMPLETED, ACCOUNT_REGISTRATION, etc.
+  channel           String       // WHATSAPP, EMAIL
+  recipientMasked   String       // Disamarkan untuk tampilan/log
+  status            String       @default("PENDING") // PENDING, PROCESSING, SENT, DELIVERED, READ, FAILED
+  providerMessageId String?
+  attemptCount      Int          @default(0)
+  errorCode         String?
+  createdAt         DateTime     @default(now())
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  readAt            DateTime?
+  updatedAt         DateTime     @updatedAt
+}
+
+model AiKnowledge {
+  id             String   @id @default(uuid())
+  title          String
+  content        String
+  category       String   // e.g. SYARAT_LAYANAN, INFO_DESA, FAQ
+  source         String?
+  status         String   @default("PUBLISHED") // PUBLISHED, DRAFT, ARCHIVED, UNPUBLISHED
+  isActive       Boolean  @default(true)
+  lastUpdatedBy  String?  // Admin/Supervisor ID
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model AuditLog {
+  id             String   @id @default(uuid())
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action         String   // e.g. CREATE_APPLICATION, APPROVE_APPLICATION, UPDATE_USER
+  entityId       String?  // The ID of the affected record
+  entityType     String?  // The name of the affected model
+  details        String?  // JSON string containing changes
+  ipAddress      String?
+  createdAt      DateTime @default(now())
+}
+
+model AIConfiguration {
+  id                   String   @id @default(uuid())
+  provider             String   @default("NVIDIA") // NVIDIA, OPENAI, GEMINI
+  modelId              String   @default("meta/llama-3.2-11b-vision-instruct")
+  baseUrl              String   @default("https://integrate.api.nvidia.com/v1")
+  temperature          Float    @default(0.2)
+  topP                 Float    @default(0.8)
+  maxTokens            Int      @default(1024)
+  timeout              Int      @default(30000) // ms
+  streamingEnabled     Boolean  @default(true)
+  isEnabled            Boolean  @default(true)
+  systemPrompt         String
+  assistantName        String   @default("Asisten Desa AI")
+  assistantDescription String   @default("Asisten kecerdasan buatan resmi untuk pelayanan administrasi desa.")
+  responseLanguage     String   @default("Indonesia")
+  databaseOnlyMode     Boolean  @default(true)
+  useKnowledgeBase     Boolean  @default(true)
+  useDatabaseStats     Boolean  @default(true)
+  fallbackMessage      String   @default("Maaf, informasi tersebut belum tersedia dalam basis data resmi desa. Silakan hubungi petugas desa untuk informasi lebih lanjut.")
+  updatedBy            String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model AIProviderCredential {
+  id                String    @id @default(uuid())
+  provider          String    @unique // NVIDIA, OPENAI, GEMINI
+  encryptedApiKey   String
+  keyMask           String
+  status            String    @default("CONFIGURED") // CONFIGURED, TEST_SUCCESS, TEST_FAILED
+  lastTestedAt      DateTime?
+  lastErrorMessage  String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model WhatsAppConfiguration {
+  id                           String    @id @default(uuid())
+  provider                     String    @default("WHATSAPP_CLOUD_API")
+  phoneNumberId                String    @default("")
+  businessAccountId            String    @default("")
+  apiVersion                   String    @default("v19.0")
+  encryptedAccessToken         String?
+  encryptedAppSecret           String?
+  encryptedWebhookVerifyToken  String?
+  encryptedFonnteToken         String?
+  senderPhone                  String    @default("")
+  isEnabled                    Boolean   @default(true)
+  connectionStatus             String    @default("NOT_CONFIGURED") // NOT_CONFIGURED, CONNECTED, FAILED
+  lastTestedAt                 DateTime?
+  lastErrorMessage             String?
+  updatedBy                    String?
+  createdAt                    DateTime  @default(now())
+  updatedAt                    DateTime  @updatedAt
+
+  @@map("whatsapp_configurations")
+}
+
+model WhatsAppTemplate {
+  id                String                        @id @default(uuid())
+  templateName      String                        @unique
+  templateCategory  String                        @default("UTILITY") // UTILITY, AUTHENTICATION, MARKETING
+  language          String                        @default("id")
+  messageType       String                        @default("TEMPLATE") // TEMPLATE, TEXT
+  content           String
+  metaTemplateName  String
+  isActive          Boolean                       @default(true)
+  createdAt         DateTime                      @default(now())
+  updatedAt         DateTime                      @updatedAt
+
+  settings          WhatsAppNotificationSetting[]
+
+  @@map("whatsapp_templates")
+}
+
+model WhatsAppNotificationSetting {
+  id            String            @id @default(uuid())
+  eventType     String            @unique // e.g. ACCOUNT_REGISTRATION, APPLICATION_SUBMITTED, etc.
+  name          String
+  description   String
+  isEnabled     Boolean           @default(true)
+  recipientType String            @default("CITIZEN") // CITIZEN, STAFF, SUPERVISOR
+  templateId    String?
+  template      WhatsAppTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@map("whatsapp_notification_settings")
+}
+
+model WhatsAppMessageLog {
+  id                String                @id @default(uuid())
+  notificationId    String?
+  notification      Notification?         @relation(fields: [notificationId], references: [id], onDelete: SetNull)
+  applicationId     String?
+  recipientPhone    String
+  templateName      String
+  messageStatus     String                @default("PENDING") // PENDING, SENT, DELIVERED, READ, FAILED
+  providerMessageId String?               @unique
+  errorCode         String?
+  errorMessage      String?
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  readAt            DateTime?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@index([messageStatus])
+  @@index([applicationId])
+  @@index([providerMessageId])
+  @@index([createdAt])
+  @@map("whatsapp_message_logs")
+}
+
+

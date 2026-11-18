@@ -1,0 +1,281 @@
+/* ====================================================
+   Argon Dashboard Layout Stylesheet
+   Faithful recreation of Argon Dashboard Laravel BS4
+   ==================================================== */
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color 0.25s ease;
+}
+
+/* =========================================
+   SIDEBAR — Argon Fixed Crisp Sidebar
+   ========================================= */
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+  transition: width 0.2s ease, background-color 0.25s ease;
+}
+
+.sidebarHeader {
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebarHeader h3 {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.roleBadge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--sidebar-badge-bg);
+  border-radius: 0.375rem;
+  font-weight: 800;
+  color: var(--sidebar-badge-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Nav links */
+.nav {
+  padding: 1rem 0.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow-y: auto;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--sidebar-text);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navLink:hover {
+  color: var(--sidebar-text-hover);
+  background-color: var(--sidebar-hover-bg);
+  transform: translateX(3px);
+}
+
+.navLinkActive {
+  color: var(--danger, #dc2626) !important;
+  background-color: rgba(220, 38, 38, 0.08) !important;
+  font-weight: 700;
+}
+
+.sidebarFooter {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.themeToggleSection {
+  width: 100%;
+}
+
+.userInfo {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoutBtn {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  color: var(--danger);
+  border: 1.5px solid rgba(220, 38, 38, 0.25);
+  border-radius: 0.375rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.logoutBtn:hover {
+  background-color: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
+}
+
+/* =========================================
+   MAIN CONTENT & ARGON HEADER GRADIENT
+   ========================================= */
+.mainContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Iconic Argon Header (Deep Crimson Red Gradient) */
+.argonHeaderContainer {
+  background: var(--header-bg);
+  padding: 1.5rem 2rem 6.5rem;
+  color: var(--header-text);
+}
+
+.topHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.portalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.portalDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--success);
+  box-shadow: 0 0 8px rgba(45, 206, 137, 0.8);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Content floating over header gradient */
+.contentBody {
+  flex: 1;
+  padding: 0 2rem 3rem;
+  margin-top: -5rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Page Title & Subtitle sitting inside the Argon Header Gradient — Crystal Clear Brilliant White */
+.contentBody > div > div:first-child h1,
+.contentBody > div > div:first-child p,
+.contentBody > div > h1:first-child,
+.contentBody > div > h1:first-child + p,
+.contentBody > div:first-child > div:first-child h1,
+.contentBody > div:first-child > div:first-child p,
+.contentBody > div > div:first-child a.backLink,
+.contentBody > div:first-child > div:first-child a.backLink {
+  color: #ffffff !important;
+}
+
+.contentBody > div > div:first-child h1,
+.contentBody > div > h1:first-child,
+.contentBody > div:first-child > div:first-child h1 {
+  font-weight: 800 !important;
+  font-size: 2rem !important;
+  text-shadow: none !important;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.contentBody > div > div:first-child p,
+.contentBody > div > h1:first-child + p,
+.contentBody > div:first-child > div:first-child p {
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  text-shadow: none !important;
+  opacity: 0.95 !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Argon Header Action Button (High Contrast Crisp White Button with Red Accent) */
+.headerActionBtn {
+  background-color: #ffffff !important;
+  color: #dc2626 !important;
+  padding: 0.65rem 1.35rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  white-space: nowrap !important;
+}
+
+.headerActionBtn span,
+.headerActionBtn strong,
+.headerActionBtn * {
+  color: #dc2626 !important;
+}
+
+.headerActionBtn:hover {
+  background-color: #f8fafc !important;
+  color: #b91c1c !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .contentBody {
+    padding: 0 1rem 2rem;
+    margin-top: -3.5rem;
+  }
+  .argonHeaderContainer {
+    padding: 1.5rem 1rem 5rem;
+  }
+}
